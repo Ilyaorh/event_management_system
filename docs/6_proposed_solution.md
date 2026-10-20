@@ -1,4 +1,6 @@
 6. Предполагаемая структура решения
+
+```
 EventManagement/
  │
  ├── src/
@@ -33,3 +35,4 @@ EventManagement/
  ├── .editorconfig
  ├── README.md
  └── EventManagement.sln
+```
