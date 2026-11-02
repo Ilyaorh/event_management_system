@@ -58,12 +58,15 @@ public sealed class RegistrationService(
                 await transaction.CommitAsync(cancellationToken);
                 return;
             }
-            var ticket = await db.Tickets.SingleOrDefaultAsync(x => x.RegistrationId == registrationId, cancellationToken)
+            var ticket = await db.Tickets.AsNoTracking().SingleOrDefaultAsync(x => x.RegistrationId == registrationId, cancellationToken)
                 ?? throw new DomainException("TICKET_NOT_FOUND", "Билет регистрации не найден.");
             if (ticket.Status == "Used")
                 throw new DomainException("ALREADY_CHECKED_IN", "Нельзя отменить регистрацию после прохода.");
+            var changed = await db.Tickets.Where(x => x.Id == ticket.Id && x.Status == "Active")
+                .ExecuteUpdateAsync(setters => setters.SetProperty(x => x.Status, "Cancelled"), cancellationToken);
+            if (changed != 1)
+                throw new DomainException("TICKET_NOT_ACTIVE", "Билет уже использован или отменён.");
             registration.Status = "Cancelled";
-            ticket.Status = "Cancelled";
             await capacity.ReleaseAsync(registration.EventId, cancellationToken);
             await db.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
