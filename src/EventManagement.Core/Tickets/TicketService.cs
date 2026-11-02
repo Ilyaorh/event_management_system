@@ -10,6 +10,7 @@ public sealed class TicketService(EventManagementDbContext db) : ITicketService
 {
     public async Task<TicketDto> GenerateAsync(GenerateTicketRequest request, CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(request);
         var registration = await db.Registrations.AsNoTracking().SingleOrDefaultAsync(x => x.Id == request.RegistrationId, cancellationToken);
         if (registration is null || registration.EventId != request.EventId || registration.UserId != request.UserId || registration.Status != "Active")
             throw new DomainException("REGISTRATION_NOT_FOUND", "Активная регистрация не найдена.");
