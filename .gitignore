@@ -53,3 +53,30 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# .NET: сборка, тесты и локальные инструменты
+**/bin/
+**/obj/
+.vs/
+.idea/
+*.user
+*.suo
+TestResults/
+*.trx
+coverage/
+
+# Локальные данные и секреты
+.env
+.env.*
+!.env.example
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.pfx
+*.p12
+*.key
+appsettings.*.local.json
+*.log
