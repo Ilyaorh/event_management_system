@@ -24,7 +24,10 @@ public sealed class RegistrationService(
 
             var registration = new RegistrationRecord
             {
-                Id = Guid.NewGuid(), UserId = request.UserId, EventId = request.EventId, RegisteredAt = DateTimeOffset.UtcNow
+                Id = Guid.NewGuid(),
+                UserId = request.UserId,
+                EventId = request.EventId,
+                RegisteredAt = DateTimeOffset.UtcNow
             };
             var reservation = await capacity.ReserveAsync(new ReserveSpotRequest(request.EventId, registration.Id), cancellationToken);
             if (!reservation.Success)

@@ -17,8 +17,12 @@ public sealed class EventService(EventManagementDbContext db) : IEventCapacitySe
             throw new DomainException("INVALID_EVENT", "Дата мероприятия должна быть в будущем.");
         var item = new EventRecord
         {
-            Id = Guid.NewGuid(), Title = request.Title.Trim(), Description = request.Description?.Trim() ?? "",
-            StartDate = request.StartDate, Location = request.Location.Trim(), TotalCapacity = request.TotalCapacity,
+            Id = Guid.NewGuid(),
+            Title = request.Title.Trim(),
+            Description = request.Description?.Trim() ?? "",
+            StartDate = request.StartDate,
+            Location = request.Location.Trim(),
+            TotalCapacity = request.TotalCapacity,
             AvailableSeats = request.TotalCapacity
         };
         db.Events.Add(item);
@@ -41,6 +45,7 @@ public sealed class EventService(EventManagementDbContext db) : IEventCapacitySe
 
     public async Task<ReserveSpotResult> ReserveAsync(ReserveSpotRequest request, CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(request);
         var current = await db.Events.AsNoTracking().SingleOrDefaultAsync(x => x.Id == request.EventId, cancellationToken);
         if (current is null)
             return new ReserveSpotResult(false, "EVENT_NOT_FOUND");
