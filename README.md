@@ -29,3 +29,11 @@ dotnet run --project src/EventManagement.Api --urls http://127.0.0.1:5090
 - Нет редактирования/отмены мероприятия, истории пользователя, ролевой модели, платежей, email и пользовательского веб-интерфейса. Первоначальные документы содержат более широкий план, а не список готовых функций.
 
 [Актуальный API](docs/api.md) | [Уточнение архитектуры](docs/25_plan_realisatsii.md) | [Отчёты этапов](docs/stages/) | [Правила Git](docs/version-control.md)
+
+## Отчёты по этапам
+
+1. [Артефакты и протоколы](docs/stages/01-artifacts.md)
+2. [Контроль версий](docs/stages/02-version-control.md)
+3. [Интеграция модулей](docs/stages/03-integration.md)
+4. [Отладка](docs/stages/04-debugging.md)
+5. [Инспекция кода](docs/stages/05-inspection.md)
