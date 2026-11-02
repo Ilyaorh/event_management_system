@@ -41,6 +41,13 @@ public sealed class EventService(EventManagementDbContext db) : IEventCapacitySe
 
     public async Task<ReserveSpotResult> ReserveAsync(ReserveSpotRequest request, CancellationToken cancellationToken)
     {
+        var current = await db.Events.AsNoTracking().SingleOrDefaultAsync(x => x.Id == request.EventId, cancellationToken);
+        if (current is null)
+            return new ReserveSpotResult(false, "EVENT_NOT_FOUND");
+        if (current.Status != "Published")
+            return new ReserveSpotResult(false, "EVENT_CANCELLED");
+        if (current.StartDate <= DateTimeOffset.UtcNow)
+            return new ReserveSpotResult(false, "EVENT_STARTED");
         var changed = await db.Events.Where(x => x.Id == request.EventId && x.Status == "Published" && x.AvailableSeats > 0)
             .ExecuteUpdateAsync(setters => setters.SetProperty(x => x.AvailableSeats, x => x.AvailableSeats - 1), cancellationToken);
         if (changed == 1)

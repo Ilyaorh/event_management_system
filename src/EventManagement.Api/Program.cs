@@ -31,7 +31,7 @@ app.Use(async (context, next) =>
         context.Response.StatusCode = error.Code switch
         {
             "EVENT_NOT_FOUND" or "USER_NOT_FOUND" or "REGISTRATION_NOT_FOUND" or "TICKET_NOT_FOUND" => StatusCodes.Status404NotFound,
-            "EVENT_FULL" or "EVENT_CANCELLED" or "DUPLICATE_REGISTRATION" or "TICKET_ALREADY_GENERATED" or "TICKET_NOT_ACTIVE" or "ALREADY_CHECKED_IN" or "CAPACITY_INVALID" => StatusCodes.Status409Conflict,
+            "EVENT_FULL" or "EVENT_CANCELLED" or "EVENT_STARTED" or "DUPLICATE_REGISTRATION" or "TICKET_ALREADY_GENERATED" or "TICKET_NOT_ACTIVE" or "ALREADY_CHECKED_IN" or "CAPACITY_INVALID" => StatusCodes.Status409Conflict,
             _ => StatusCodes.Status400BadRequest
         };
         await context.Response.WriteAsJsonAsync(new { code = error.Code, message = error.Message }, context.RequestAborted);
