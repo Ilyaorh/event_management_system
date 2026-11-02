@@ -18,7 +18,8 @@ public sealed class TicketService(EventManagementDbContext db) : ITicketService
             throw new DomainException("TICKET_ALREADY_GENERATED", "Билет для регистрации уже создан.");
         var ticket = new TicketRecord
         {
-            Id = Guid.NewGuid(), RegistrationId = request.RegistrationId,
+            Id = Guid.NewGuid(),
+            RegistrationId = request.RegistrationId,
             UniqueCode = Convert.ToHexString(RandomNumberGenerator.GetBytes(24))
         };
         db.Tickets.Add(ticket);

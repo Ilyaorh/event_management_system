@@ -17,8 +17,12 @@ public sealed class EventService(EventManagementDbContext db) : IEventCapacitySe
             throw new DomainException("INVALID_EVENT", "Дата мероприятия должна быть в будущем.");
         var item = new EventRecord
         {
-            Id = Guid.NewGuid(), Title = request.Title.Trim(), Description = request.Description?.Trim() ?? "",
-            StartDate = request.StartDate, Location = request.Location.Trim(), TotalCapacity = request.TotalCapacity,
+            Id = Guid.NewGuid(),
+            Title = request.Title.Trim(),
+            Description = request.Description?.Trim() ?? "",
+            StartDate = request.StartDate,
+            Location = request.Location.Trim(),
+            TotalCapacity = request.TotalCapacity,
             AvailableSeats = request.TotalCapacity
         };
         db.Events.Add(item);

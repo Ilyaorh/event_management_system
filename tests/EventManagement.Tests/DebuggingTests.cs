@@ -28,8 +28,12 @@ public class DebuggingTests
         var user = await new ParticipantService(db).CreateAsync(new CreateParticipantRequest("Участник"), CancellationToken.None);
         var ev = new EventRecord
         {
-            Id = Guid.NewGuid(), Title = "Прошедшее мероприятие", Location = "Зал", StartDate = DateTimeOffset.UtcNow.AddDays(-1),
-            TotalCapacity = 1, AvailableSeats = 1
+            Id = Guid.NewGuid(),
+            Title = "Прошедшее мероприятие",
+            Location = "Зал",
+            StartDate = DateTimeOffset.UtcNow.AddDays(-1),
+            TotalCapacity = 1,
+            AvailableSeats = 1
         };
         db.Events.Add(ev);
         await db.SaveChangesAsync();
