@@ -48,7 +48,8 @@ Task<ReserveSpotResult> ReserveAsync(
 |---|---|
 | EVENT_NOT_FOUND | Мероприятие не существует |
 | EVENT_FULL | Свободных мест нет |
-| EVENT_CANCELLED | Мероприятие отменено |
+| EVENT_CANCELLED | Мероприятие не опубликовано или отменено |
+| EVENT_STARTED | Мероприятие уже началось |
 
 Пример:
 
